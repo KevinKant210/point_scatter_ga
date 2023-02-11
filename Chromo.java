@@ -97,6 +97,21 @@ public class Chromo
 		return (geneValue);
 	}
 
+	public int getSubGeneValue(String sub){
+		int len = sub.length();
+		int geneVal = 0;
+		char geneBit;
+		for(int i = 0 ; i <len; i++){
+			geneBit = sub.charAt(i);
+
+			if(geneBit == '1'){
+				geneVal += (int) Math.pow(2.0,len-1-i);
+			}
+		}
+
+		return geneVal;
+	}
+
 	//  Mutate a Chromosome Based on Mutation Type *****************************
 
 	public void doMutation(){

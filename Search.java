@@ -95,6 +95,8 @@ public class Search {
  
 		if (Parameters.problemType.equals("NM")){
 				problem = new NumberMatch();
+		}else if(Parameters.problemType.equals("PS")){
+			problem = new PointScatter();
 		}
 		else if (Parameters.problemType.equals("OM")){
 				problem = new OneMax();
