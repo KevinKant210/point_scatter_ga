@@ -80,9 +80,9 @@ public class Search {
 	//  Write Parameters To Summary Output File
 		String summaryFileName = Parameters.expID + "_summary.txt";
 		FileWriter summaryOutput = new FileWriter(summaryFileName);
-		FileWriter summaryGenStats = new FileWriter(Parameters.expID + "_genstats.txt");
-		FileWriter summaryData = new FileWriter(Parameters.expID + "_data.txt");
-		FileWriter summaryOutputBest = new FileWriter(Parameters.expID + "_best.txt");
+		FileWriter summaryGenStats = new FileWriter(Parameters.expID + "_genstats.csv");
+		FileWriter summaryData = new FileWriter(Parameters.expID + "_data.csv");
+		FileWriter summaryOutputBest = new FileWriter(Parameters.expID + "_best.csv");
 		parmValues.outputParameters(summaryOutput);
 
 	//	Set up Fitness Statistics matrix
@@ -397,7 +397,7 @@ public class Search {
 			summaryGenStats.write(temp);
 			
 			summaryGenStats.write(String.valueOf(fitnessStats[0][i]/Parameters.numRuns) + ",");
-			
+			summaryGenStats.write(average)
 			summaryGenStats.write(String.valueOf(fitnessStats[1][i]/Parameters.numRuns));
 			summaryGenStats.write("\n");
 		}
