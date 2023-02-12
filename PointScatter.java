@@ -31,7 +31,7 @@ public class PointScatter extends FitnessFunction{
 
         
 
-        return Math.ceil(dist);
+        return dist/100;
     }
 
     public void doRawFitness(Chromo X){

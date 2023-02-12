@@ -80,8 +80,9 @@ public class Search {
 	//  Write Parameters To Summary Output File
 		String summaryFileName = Parameters.expID + "_summary.txt";
 		FileWriter summaryOutput = new FileWriter(summaryFileName);
-		FileWriter summaryOutputCSV = new FileWriter(Parameters.expID + "_data.txt");
-		FileWriter summaryOutputBest = new FileWriter(Parameters.expID + "_bestData.txt");
+		FileWriter summaryGenStats = new FileWriter(Parameters.expID + "_genstats.txt");
+		FileWriter summaryData = new FileWriter(Parameters.expID + "_data.txt");
+		FileWriter summaryOutputBest = new FileWriter(Parameters.expID + "_best.txt");
 		parmValues.outputParameters(summaryOutput);
 
 	//	Set up Fitness Statistics matrix
@@ -132,7 +133,9 @@ public class Search {
 		for (R = 1; R <= Parameters.numRuns; R++){
 
 			bestOfRunChromo.rawFitness = defaultBest;
-			System.out.println();
+
+			//disabled duringf experiments
+			// System.out.println();
 
 			//	Initialize First Generation
 			for (int i=0; i<Parameters.popSize; i++){
@@ -211,17 +214,22 @@ public class Search {
 							);
 
 				// Output generation statistics to screen
-				System.out.println(R + "\t" + G +  "\t" + (int)bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness);
+				//disabled for experiments
+				// System.out.println(R + "\t" + G +  "\t" + (int)bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness);
 
 				// Output generation statistics to summary file
-				summaryOutput.write(" R ");
-				Hwrite.right(R, 3, summaryOutput);
-				summaryOutput.write(" G ");
-				Hwrite.right(G, 3, summaryOutput);
-				Hwrite.right((int)bestOfGenChromo.rawFitness, 7, summaryOutput);
-				Hwrite.right(averageRawFitness, 11, 3, summaryOutput);
-				Hwrite.right(stdevRawFitness, 11, 3, summaryOutput);
-				summaryOutput.write("\n");
+				// summaryOutput.write(" R ");
+				// Hwrite.right(R, 3, summaryOutput);
+				// summaryOutput.write(" G ");
+				// Hwrite.right(G, 3, summaryOutput);
+				// Hwrite.right((int)bestOfGenChromo.rawFitness, 7, summaryOutput);
+				// Hwrite.right(averageRawFitness, 11, 3, summaryOutput);
+				// Hwrite.right(stdevRawFitness, 11, 3, summaryOutput);
+				// summaryOutput.write("\n");
+
+				//custom writing here 
+				
+				summaryData.write(R + "," + G + "," + bestOfGenChromo.rawFitness + "," + averageRawFitness + "," + stdevRawFitness + "\n");
 
 
 		// *********************************************************************
@@ -359,8 +367,9 @@ public class Search {
 			Hwrite.right(bestOfRunG, 4, summaryOutput);
 
 			problem.doPrintGenes(bestOfRunChromo, summaryOutput);
-
-			System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
+			
+			//disabled during experiments
+			// System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
 
 			summaryOutputBest.write(R + "," + bestOfRunG + "," + bestOfRunChromo.rawFitness + "\n");
 
@@ -385,19 +394,22 @@ public class Search {
 			String temp;
 
 			temp = String.valueOf(i) + ",";
-			summaryOutputCSV.write(temp);
+			summaryGenStats.write(temp);
 			
-			summaryOutputCSV.write(String.valueOf(fitnessStats[0][i]/Parameters.numRuns) + ",");
+			summaryGenStats.write(String.valueOf(fitnessStats[0][i]/Parameters.numRuns) + ",");
 			
-			summaryOutputCSV.write(String.valueOf(fitnessStats[1][i]/Parameters.numRuns));
-			summaryOutputCSV.write("\n");
+			summaryGenStats.write(String.valueOf(fitnessStats[1][i]/Parameters.numRuns));
+			summaryGenStats.write("\n");
 		}
 
-		summaryOutputCSV.close();
+		summaryGenStats.close();
 		summaryOutputBest.close();
+		summaryData.close();
 
 		summaryOutput.write("\n");
 		summaryOutput.close();
+
+		System.out.println(bestOverAllChromo.rawFitness);
 
 		System.out.println();
 		System.out.println("Start:  " + startTime);
