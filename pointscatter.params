@@ -9,9 +9,9 @@ Fitness Scaling Type (2)     :0
 Crossover Type (3)           :3
 Crossover Rate (4)           :0.8
 Mutation Type (5)            :1
-Mutation Rate (6)            :0.001
+Mutation Rate (6)            :0.005
 Random Number Seed           :75982
-Number of Genes/Points (7)   :25
+Number of Genes/Points (7)   :2
 Size of Genes (18)           :18
 
 
