@@ -80,6 +80,8 @@ public class Search {
 	//  Write Parameters To Summary Output File
 		String summaryFileName = Parameters.expID + "_summary.txt";
 		FileWriter summaryOutput = new FileWriter(summaryFileName);
+		FileWriter summaryOutputCSV = new FileWriter(Parameters.expID + "_data.txt");
+		FileWriter summaryOutputBest = new FileWriter(Parameters.expID + "_bestData.txt");
 		parmValues.outputParameters(summaryOutput);
 
 	//	Set up Fitness Statistics matrix
@@ -323,6 +325,7 @@ public class Search {
 				for (int i=0; i<Parameters.popSize; i=i+2){
 
 					//	Select Two Parents
+					
 					parent1 = Chromo.selectParent();
 					parent2 = parent1;
 					while (parent2 == parent1){
@@ -359,6 +362,8 @@ public class Search {
 
 			System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
 
+			summaryOutputBest.write(R + "," + bestOfRunG + "," + bestOfRunChromo.rawFitness + "\n");
+
 		} //End of a Run
 
 		Hwrite.left("B", 8, summaryOutput);
@@ -373,6 +378,23 @@ public class Search {
 			Hwrite.left(fitnessStats[1][i]/Parameters.numRuns, 20, 2, summaryOutput);
 			summaryOutput.write("\n");
 		}
+
+		
+		for (int i=0; i<Parameters.generations; i++){
+			
+			String temp;
+
+			temp = String.valueOf(i) + ",";
+			summaryOutputCSV.write(temp);
+			
+			summaryOutputCSV.write(String.valueOf(fitnessStats[0][i]/Parameters.numRuns) + ",");
+			
+			summaryOutputCSV.write(String.valueOf(fitnessStats[1][i]/Parameters.numRuns));
+			summaryOutputCSV.write("\n");
+		}
+
+		summaryOutputCSV.close();
+		summaryOutputBest.close();
 
 		summaryOutput.write("\n");
 		summaryOutput.close();

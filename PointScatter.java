@@ -100,4 +100,11 @@ public class PointScatter extends FitnessFunction{
         
         //need to make choices based on handling of invalid children, should probably be done at the crossover level doing at thius level for simplicity
     }
+
+    public void doPrintGenes(Chromo X, FileWriter output) throws java.io.IOException{
+
+		output.write("Chromo:" +  X.chromo + "\n");
+        output.write("Raw Fitness :" + String.valueOf(X.rawFitness) + "\n");
+		return;
+	}
 }

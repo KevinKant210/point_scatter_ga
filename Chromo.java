@@ -168,6 +168,28 @@ public class Chromo
 			return(j);
 
 		case 2:     //  Tournament Selection
+			
+			//k tournament size
+			int k_tourn = 25;
+
+			ArrayList<Integer> tourn_pop = new ArrayList<>();
+			
+			for(int i = 0 ; i < k_tourn; i++){
+				tourn_pop.add(Search.r.nextInt(Parameters.popSize));
+				
+			}
+
+			int best = tourn_pop.get(0);
+
+			
+
+			for(int i =1 ; i < k_tourn; i++){
+
+				if(Search.member[tourn_pop.get(i)].rawFitness > Search.member[best].rawFitness)best = tourn_pop.get(i);
+			}
+
+			return best;
+			
 
 		default:
 			System.out.println("ERROR - No selection method selected");
@@ -179,8 +201,8 @@ public class Chromo
 
 	public static void mateParents(int pnum1, int pnum2, Chromo parent1, Chromo parent2, Chromo child1, Chromo child2){
 
-		int xoverPoint1;
-		int xoverPoint2;
+		int xoverPoint1 = 0;
+		int xoverPoint2 = 0;
 
 		switch (Parameters.xoverType){
 
@@ -194,9 +216,60 @@ public class Chromo
 			child2.chromo = parent2.chromo.substring(0,xoverPoint1) + parent1.chromo.substring(xoverPoint1);
 			break;
 
-		case 2:     //  Two Point Crossover
+		case 2: {    //  Two Point Crossover
+			while(xoverPoint1 == xoverPoint2){
+				xoverPoint1 = 1 + (int)(Search.r.nextDouble() * (Parameters.numGenes * Parameters.geneSize-1));
+				xoverPoint2 = 1 + (int)(Search.r.nextDouble() * (Parameters.numGenes * Parameters.geneSize-1));
+			}
+			
 
+			if(xoverPoint1 > xoverPoint2){
+				//need to swap the two values
+				int a = xoverPoint1;
+
+				xoverPoint1 = xoverPoint2;
+				xoverPoint2 = a;
+			}
+
+			
+				
+
+				child1.chromo = parent1.chromo.substring(0,xoverPoint1) + parent2.chromo.substring(xoverPoint1,xoverPoint2) + parent1.chromo.substring(xoverPoint2);
+				child2.chromo = parent2.chromo.substring(0,xoverPoint1) + parent1.chromo.substring(xoverPoint1,xoverPoint2) + parent2.chromo.substring(xoverPoint2);
+
+				
+				break;
+		}
 		case 3:     //  Uniform Crossover
+			double rand;
+			String sub1 = "";
+			String sub2 = "";
+
+			for(int i =0; i < parent1.chromo.length(); i++){
+				rand = Search.r.nextDouble();
+				
+				
+				if(rand > 0.5){
+					sub1 += (parent1.chromo.charAt(i));
+				}else{
+					sub1 += (parent2.chromo.charAt(i));
+				}
+
+				
+				rand = Search.r.nextDouble();
+				if(rand > 0.5){
+					sub2 = sub2 + (parent1.chromo.charAt(i));
+				}else{
+					sub2 = sub2 + (parent2.chromo.charAt(i));
+				}
+			}
+			
+			
+			child1.chromo = sub1;
+			child2.chromo = sub2;
+
+			break;
+		
 
 		default:
 			System.out.println("ERROR - Bad crossover method selected");
