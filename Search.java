@@ -397,7 +397,7 @@ public class Search {
 			summaryGenStats.write(temp);
 			
 			summaryGenStats.write(String.valueOf(fitnessStats[0][i]/Parameters.numRuns) + ",");
-			summaryGenStats.write(average)
+			
 			summaryGenStats.write(String.valueOf(fitnessStats[1][i]/Parameters.numRuns));
 			summaryGenStats.write("\n");
 		}
